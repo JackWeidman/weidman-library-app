@@ -1,19 +1,18 @@
 <template>
-  <div class="center bordered-div">
-    <h2>Title:{{ title }}</h2>
-    <h2>Author:{{ author }}</h2>
-    <button @click="toggleDetails">Show Details</button>
-    <ul v-if="detailsAreVisible" class="center">
-      <li>
-        <h2>Genre:{{ genre }}</h2>
-      </li>
-      <li>
-        <h2>Length:{{ length }}</h2>
-      </li>
-      <li>
-        <h2>Review:{{ review }}</h2>
-      </li>
-    </ul>
+  <div class="book" @click="toggleDetails">
+    <div class="cover">
+      <h2>{{ title }}</h2>
+      <h4>by</h4>
+      <h2>{{ author }}</h2>
+    </div>
+    <div class="pages" :class="{ open: detailsAreVisible }">
+      <div class="content">
+        <h2>Genre: {{ genre }}</h2>
+        <h2>Length: {{ length }}</h2>
+        <h2>Review:</h2>
+        <p>{{ review }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,7 +22,6 @@ export default {
   data() {
     return {
       detailsAreVisible: false,
-      
     };
   },
   methods: {
@@ -34,20 +32,63 @@ export default {
 };
 </script>
 
-
 <style scoped>
-.center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+.book {
+  position: relative;
+  width: 200px;
+  height: 275px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.pages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f7efe5;
+  box-sizing: border-box;
+  transform-origin: left center;
+  transform: rotateY(-180deg);
+  backface-visibility: hidden;
+  transition: transform 0.3s ease;
+}
+
+.pages.open {
+  transform: rotateY(0deg);
+}
+
+.content {
+  padding: 20px;
+}
+
+/* Additional styles for better appearance */
+.book h2,
+.book h4,
+.book p {
   margin: 0;
 }
-ul {
-  list-style-type: none;
+
+.book h2 {
+  font-size: 18px;
 }
-.bordered-div {
-  border: 1px solid black
+
+.book h4 {
+  font-size: 14px;
 }
 </style>

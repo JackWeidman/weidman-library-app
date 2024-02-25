@@ -1,15 +1,15 @@
 <template>
+  <AddBook @add-book="addBook"></AddBook>
   <ul>
     <BookObject
-    v-for="book in books"
-    :key="book.id"
-    :author="book.author"
-    :title="book.title"
-    :genre="book.genre"
-    :length="book.length"
-    :review="book.review"
+      v-for="book in books"
+      :key="book.id"
+      :author="book.author"
+      :title="book.title"
+      :genre="book.genre"
+      :length="book.length"
+      :review="book.review"
     ></BookObject>
-    <AddBook></AddBook>
   </ul>
 </template>
 
@@ -24,21 +24,20 @@ export default {
   },
   data() {
     return {
-      books: [{
-        id: '',
-        title: 'Harry Potter',
-        author: 'Michael Gambon',
-        genre: '',
-        length: '',
-        review: '',
-
-      },
-    {
-      id: '',
-      author: 'Jimmy Hoffa',
-      title: 'How to not get killed by the Mob'
-    }]
+      books: [],
     };
+  },
+  methods: {
+    addBook(newBook) {
+      this.books.push({
+        id: this.books.length + 1,
+        title: newBook.title,
+        author: newBook.author,
+        genre: newBook.genre,
+        length: newBook.length,
+        // review: review
+      });
+    },
   },
 };
 </script>
@@ -60,8 +59,5 @@ export default {
   background-color: #186309;
   color: white;
   padding: 0.05rem 1rem;
-  
 }
-
-
 </style>
