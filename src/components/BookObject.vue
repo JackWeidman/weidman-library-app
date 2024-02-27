@@ -1,11 +1,13 @@
 <template>
+
   <div class="book" @click="toggleDetails">
-    <div class="cover">
+    <div class="cover" :class="{ open: detailsAreVisible }">
       <h2>{{ title }}</h2>
       <h4>by</h4>
       <h2>{{ author }}</h2>
     </div>
-    <div class="pages" :class="{ open: detailsAreVisible }">
+
+    <div class="pages">
       <div class="content">
         <h2>Genre: {{ genre }}</h2>
         <h2>Length: {{ length }}</h2>
@@ -14,6 +16,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -33,10 +36,15 @@ export default {
 </script>
 
 <style scoped>
+/* .books-container{
+  display: flex;
+  flex-wrap: wrap;
+} */
 .book {
   position: relative;
   width: 200px;
   height: 275px;
+  margin: 15px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   padding: 10px;
@@ -53,27 +61,11 @@ export default {
   padding: 20px;
   background-color: #fff;
   box-sizing: border-box;
-}
-
-.pages {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #f7efe5;
-  box-sizing: border-box;
   transform-origin: left center;
-  transform: rotateY(-180deg);
-  backface-visibility: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
-.pages.open {
-  transform: rotateY(0deg);
-}
-
-.content {
+.pages.content {
   padding: 20px;
 }
 
@@ -90,5 +82,9 @@ export default {
 
 .book h4 {
   font-size: 14px;
+}
+
+.cover.open {
+  transform: translateX(-100%);
 }
 </style>

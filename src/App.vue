@@ -1,6 +1,6 @@
 <template>
-  <AddBook @add-book="addBook"></AddBook>
-  <ul>
+  <AddBook @add-book="addBook" class="centered"></AddBook>
+  <div class="books-container">
     <BookObject
       v-for="book in books"
       :key="book.id"
@@ -10,7 +10,7 @@
       :length="book.length"
       :review="book.review"
     ></BookObject>
-  </ul>
+  </div>
 </template>
 
 <script>
@@ -42,7 +42,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.centered {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.books-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,5 +68,10 @@ export default {
   background-color: #186309;
   color: white;
   padding: 0.05rem 1rem;
+}
+</style>
+<style>
+body {
+  background-color: rgb(47, 114, 77); /* Change to your desired background color */
 }
 </style>

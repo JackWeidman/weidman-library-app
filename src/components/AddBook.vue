@@ -1,19 +1,19 @@
 <template>
-  <form @submit.prevent="addBook">
+  <form @submit.prevent="addBook" class="font-color">
     <div>
-      <label>Title</label>
+      <strong><label>Title</label></strong>
       <input type="text" v-model="newBook.title" />
     </div>
     <div>
-      <label>Author</label>
+      <strong><label>Author</label></strong>
       <input type="text" v-model="newBook.author" />
     </div>
     <div>
-      <label>Genre</label>
+      <strong><label>Genre</label></strong>
       <input type="text" v-model="newBook.genre" />
     </div>
     <div>
-      <label for="dropdown">Length</label>
+      <strong><label for="dropdown">Length</label></strong>
       <select id="dropdown" v-model="newBook.length">
         <option value="Short">Short</option>
         <option value="Medium">Medium</option>
@@ -52,8 +52,13 @@ export default {
         genre: '',
         length: '',
         // review: '',
-      }
+      };
     },
   },
 };
 </script>
+<style scoped>
+.font-color {
+  color: rgb(104, 0, 0);
+}
+</style>
