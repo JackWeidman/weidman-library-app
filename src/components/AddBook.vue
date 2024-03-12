@@ -25,7 +25,7 @@
       <label>Review</label> 
       <input type="text" />
     </div> -->
-    <button>Add Book</button>
+    <button :class="{ 'disabled': !newBook.title || !newBook.author }">Add Book</button>
   </form>
 </template>
 
@@ -60,5 +60,15 @@ export default {
 <style scoped>
 .font-color {
   color: rgb(104, 0, 0);
+  
 }
+
+.disabled {
+  background-color: inherit;
+  
+  
+  opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
+  cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
 </style>

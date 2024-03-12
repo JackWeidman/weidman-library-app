@@ -1,5 +1,6 @@
 <template>
   <AddBook @add-book="addBook" class="centered"></AddBook>
+  
   <div class="books-container">
     <BookObject
       v-for="book in books"
@@ -9,7 +10,9 @@
       :genre="book.genre"
       :length="book.length"
       :review="book.review"
+      @delete="deleteBook(book.id)"
     ></BookObject>
+    
   </div>
 </template>
 
@@ -35,8 +38,13 @@ export default {
         author: newBook.author,
         genre: newBook.genre,
         length: newBook.length,
-        // review: review
       });
+    },
+    deleteBook(id) {
+      const index = this.books.findIndex((book) => book.id === id);
+      if (index !== -1) {
+        this.books.splice(index, 1);
+      }
     },
   },
 };
@@ -51,6 +59,7 @@ export default {
 .books-container {
   display: flex;
   flex-wrap: wrap;
+  min-height: 500px;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -64,14 +73,16 @@ export default {
 #app button {
   font: inherit;
   cursor: pointer;
-  border: 1px solid #186309;
+  border: 5px solid #186309;
   background-color: #186309;
   color: white;
   padding: 0.05rem 1rem;
 }
 </style>
+
 <style>
 body {
-  background-color: rgb(47, 114, 77); /* Change to your desired background color */
+  background-color: #e5f2c9; /* Change to your desired background color */
 }
+
 </style>

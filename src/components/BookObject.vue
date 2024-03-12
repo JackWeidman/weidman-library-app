@@ -11,8 +11,12 @@
       <div class="content">
         <h2>Genre: {{ genre }}</h2>
         <h2>Length: {{ length }}</h2>
-        <h2>Review:</h2>
-        <p>{{ review }}</p>
+        
+        <!-- <h2 v-if="review != ''">Review:
+          <p>{{ review }}</p></h2> -->
+          <h2>Review:</h2>
+          <AddReview></AddReview>
+        <button @click="deleteBook" class="delete-button" v-show="detailsAreVisible">Delete</button>
       </div>
     </div>
   </div>
@@ -20,8 +24,12 @@
 </template>
 
 <script>
+import AddReview from './AddReview.vue'
 export default {
   props: ['title', 'author', 'genre', 'length', 'review'],
+  components: {
+    AddReview
+  },
   data() {
     return {
       detailsAreVisible: false,
@@ -31,7 +39,12 @@ export default {
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
+    deleteBook(){
+      const id = this.id;
+      this.$emit('delete', id)
+    }
   },
+
 };
 </script>
 
@@ -47,7 +60,7 @@ export default {
   margin: 15px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -86,5 +99,12 @@ export default {
 
 .cover.open {
   transform: translateX(-100%);
+}
+
+.delete-button{
+  position: absolute;
+  bottom: 10px;
+  left: 70%;
+ 
 }
 </style>
