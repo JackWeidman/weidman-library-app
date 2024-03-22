@@ -39,6 +39,9 @@ export default {
         genre: newBook.genre,
         length: newBook.length,
       });
+      this.books.sort((a, b) => {
+    return a.author.localeCompare(b.author);
+  });
     },
     deleteBook(id) {
       const index = this.books.findIndex((book) => book.id === id);
@@ -82,7 +85,7 @@ export default {
 
 <style>
 body {
-  background-color: #e5f2c9; /* Change to your desired background color */
+  background-color: rgb(80, 33, 14); /* Change to your desired background color */
 }
 
 </style>
