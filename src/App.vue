@@ -85,7 +85,7 @@ export default {
 
 <style>
 body {
-  background-color: rgb(66, 27, 12); /* Change to your desired background color */
+  background-color: rgb(75, 31, 13); /* Change to your desired background color */
 }
 
 </style>
