@@ -1,26 +1,23 @@
 <template>
+  <base-card>
+    <div class="book" @click="toggleDetails">
+      <div class="cover" :class="{ open: detailsAreVisible }">
+        <h2>{{ title }}</h2>
+        <h4>by</h4>
+        <h2>{{ author }}</h2>
+      </div>
 
-  <div class="book" @click="toggleDetails">
-    <div class="cover" :class="{ open: detailsAreVisible }">
-      <h2>{{ title }}</h2>
-      <h4>by</h4>
-      <h2>{{ author }}</h2>
-    </div>
-
-    <div class="pages">
-      <div class="content">
-        <h2>Genre: {{ genre }}</h2>
-        <h2>Length: {{ length }}</h2>
-        
-        <!-- <h2 v-if="review != ''">Review:
-          <p>{{ review }}</p></h2> -->
+      <div class="pages" :class="{ open: detailsAreVisible }">
+        <div class="content">
+          <h2>Genre: {{ genre }}</h2>
+          <h2>Length: {{ length }}</h2>
           <h2>Review:</h2>
           <AddReview></AddReview>
-        <button @click="deleteBook" class="delete-button" v-show="detailsAreVisible">Delete</button>
+          <button @click="deleteBook" class="delete-button" v-show="detailsAreVisible">Delete</button>
+        </div>
       </div>
     </div>
-  </div>
-
+  </base-card>
 </template>
 
 <script>
@@ -44,15 +41,10 @@ export default {
       this.$emit('delete', id)
     }
   },
-
 };
 </script>
 
 <style scoped>
-/* .books-container{
-  display: flex;
-  flex-wrap: wrap;
-} */
 .book {
   position: relative;
   width: 200px;
@@ -62,7 +54,6 @@ export default {
   border: 1px solid #ddd;
   padding: 5px;
   cursor: pointer;
-  transition: transform 0.3s ease;
 }
 
 .cover {
@@ -74,12 +65,26 @@ export default {
   padding: 20px;
   background-color: #fff;
   box-sizing: border-box;
-  transform-origin: left center;
-  transition: transform 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
-.pages.content {
+.pages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none; /* to prevent interaction when hidden */
+  transition: opacity 0.5s ease;
+}
+
+.pages.open {
+  opacity: 1;
+  pointer-events: auto; /* allow interaction when visible */
 }
 
 /* Additional styles for better appearance */
@@ -97,14 +102,9 @@ export default {
   font-size: 14px;
 }
 
-.cover.open {
-  transform: translateX(-100%);
-}
-
-.delete-button{
+.delete-button {
   position: absolute;
   bottom: 10px;
   left: 70%;
- 
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<input type="text" @click.stop />
+<textarea type="text" placeholder="Review" @click.stop></textarea>
 </template>
 
 <script>

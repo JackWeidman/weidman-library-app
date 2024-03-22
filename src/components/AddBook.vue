@@ -1,4 +1,5 @@
 <template>
+  <base-card>
   <form @submit.prevent="addBook" class="font-color">
     <div>
       <strong><label>Title</label></strong>
@@ -27,6 +28,7 @@
     </div> -->
     <button :class="{ 'disabled': !newBook.title || !newBook.author }">Add Book</button>
   </form>
+</base-card>
 </template>
 
 <script>
