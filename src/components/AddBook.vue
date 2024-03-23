@@ -81,7 +81,7 @@ export default {
 
 <style scoped>
 .font-color {
-  color: rgb(35, 33, 41);
+  color: rgb(36, 34, 43);
 }
 
 .disabled {
