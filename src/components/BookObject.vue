@@ -12,7 +12,7 @@
           <h2>Genre: {{ genre }}</h2>
           <h2>Length: {{ length }}</h2>
           <h2>Review:</h2>
-          <AddReview></AddReview>
+         
           <button @click="deleteBook" class="delete-button" v-show="detailsAreVisible">Delete</button>
         </div>
       </div>
@@ -21,12 +21,9 @@
 </template>
 
 <script>
-import AddReview from './AddReview.vue'
 export default {
   props: ['title', 'author', 'genre', 'length', 'review'],
-  components: {
-    AddReview
-  },
+ 
   data() {
     return {
       detailsAreVisible: false,
