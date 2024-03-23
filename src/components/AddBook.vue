@@ -49,34 +49,36 @@ export default {
   },
   methods: {
     addBook() {
-      this.$emit('add-book', this.newBook)
-        this.newBook = {
-        title: '',
-        author: '',
-        genre: '',
-        length: '',
-        // review: '',
-      
-      };
-  
+      this.$emit('add-book', this.newBook);
+
       fetch('https://weidman-family-library-default-rtdb.firebaseio.com/books.json', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify( {
-        title: this.newBook.title,
-        author: this.newBook.author,
-        genre: this.newBook.genre,
-        length: this.newBook.length,
-        // review: '',
-
-        })
+        body: JSON.stringify(this.newBook)
+      }).then(response => {
+        if(!response.ok){
+          throw new Error('Failed to add book to database');
+        }
+        // Reset the form fields after successful addition
+        this.newBook = {
+          title: '',
+          author: '',
+          genre: '',
+          length: '',
+          // review: '',
+        };
+      }).catch(error => {
+        console.error('Error adding book to database:', error)
       });
     },
   },
 };
 </script>
+
+
+
 <style scoped>
 .font-color {
   color: rgb(104, 0, 0);

@@ -1,7 +1,7 @@
 <template>
   <AddBook @add-book="addBook" class="centered"></AddBook>
   
-  <div class="books-container">
+  <div v-if="booksLoaded" class="books-container">
     <BookObject
       v-for="book in books"
       :key="book.id"
@@ -28,7 +28,11 @@ export default {
   data() {
     return {
       books: [],
+      booksLoaded: false,
     };
+  },
+  created(){
+    this.fetchBooks();
   },
   methods: {
     addBook(newBook) {
@@ -47,6 +51,28 @@ export default {
       const index = this.books.findIndex((book) => book.id === id);
       if (index !== -1) {
         this.books.splice(index, 1);
+      }
+    },
+    async fetchBooks() {
+      try {
+        // Fetch data from Firebase
+        const response = await fetch('https://weidman-family-library-default-rtdb.firebaseio.com/books.json');
+        const data = await response.json();
+        // Update the local books array with the retrieved data
+        if (data) {
+          this.books = Object.keys(data).map((key) => ({
+            id: key,
+            title: data[key].title,
+            author: data[key].author,
+            genre: data[key].genre,
+            length: data[key].length,
+          }));
+          
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      } finally {
+        this.booksLoaded = true;
       }
     },
   },

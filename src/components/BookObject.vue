@@ -11,7 +11,7 @@
         <div class="content">
           <h2>Genre: {{ genre }}</h2>
           <h2>Length: {{ length }}</h2>
-          <h2>Review:</h2>
+          <h2>Review: {{ review }}</h2>
          
           <button @click="deleteBook" class="delete-button" v-show="detailsAreVisible">Delete</button>
         </div>
@@ -22,8 +22,8 @@
 
 <script>
 export default {
-  props: ['title', 'author', 'genre', 'length', 'review'],
- 
+  props: ['id', 'title', 'author', 'genre', 'length', 'review'], // Include 'id' prop
+  
   data() {
     return {
       detailsAreVisible: false,
@@ -34,8 +34,8 @@ export default {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
     deleteBook(){
-      const id = this.id;
-      this.$emit('delete', id)
+      // Emit 'delete' event with the book's id
+      this.$emit('delete', this.id);
     }
   },
 };
