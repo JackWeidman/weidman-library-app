@@ -27,10 +27,20 @@
 </template>
 
 <script>
+import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import AddBook from './components/AddBook.vue';
 import BookObject from './components/BookObject.vue';
-
+const firebaseConfig = {
+    apiKey: "AIzaSyD9mS2ktlfVmR-VU4puo9aMmpAFLTXQZxo",
+    authDomain: "weidman-family-library.firebaseapp.com",
+    databaseURL: "https://weidman-family-library-default-rtdb.firebaseio.com",
+    projectId: "weidman-family-library",
+    storageBucket: "weidman-family-library.appspot.com",
+    messagingSenderId: "166456432095",
+    appId: "1:166456432095:web:75ec4d0b775d59659ca06a"
+  };
+initializeApp(firebaseConfig)
 export default {
   name: 'App',
   components: {
