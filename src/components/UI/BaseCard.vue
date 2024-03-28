@@ -1,13 +1,12 @@
 <template>
-  <div>
+  <div class="base-card">
     <slot></slot>
   </div>
 </template>
 
 <style scoped>
-div {
-  
-  display: flex;
+.base-card {
+  display: block; /* Change display property to block */
   justify-content: center;
   align-items: center;
   margin: auto;

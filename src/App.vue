@@ -1,8 +1,12 @@
 <template>
   <div>
     <base-card v-if="!user">
-      <input type="email" v-model="email" placeholder="Email">
-      <input type="password" v-model="password" placeholder="Password">
+      <div class="input-field">
+        <div>
+          <input type="email" v-model="email" placeholder="Email" />
+        </div>
+        <input type="password" v-model="password" placeholder="Password" />
+      </div>
       <button @click="signIn">Sign In</button>
     </base-card>
     <div v-else>
@@ -32,15 +36,15 @@ import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import AddBook from './components/AddBook.vue';
 import BookObject from './components/BookObject.vue';
 const firebaseConfig = {
-    apiKey: "AIzaSyD9mS2ktlfVmR-VU4puo9aMmpAFLTXQZxo",
-    authDomain: "weidman-family-library.firebaseapp.com",
-    databaseURL: "https://weidman-family-library-default-rtdb.firebaseio.com",
-    projectId: "weidman-family-library",
-    storageBucket: "weidman-family-library.appspot.com",
-    messagingSenderId: "166456432095",
-    appId: "1:166456432095:web:75ec4d0b775d59659ca06a"
-  };
-initializeApp(firebaseConfig)
+  apiKey: 'AIzaSyD9mS2ktlfVmR-VU4puo9aMmpAFLTXQZxo',
+  authDomain: 'weidman-family-library.firebaseapp.com',
+  databaseURL: 'https://weidman-family-library-default-rtdb.firebaseio.com',
+  projectId: 'weidman-family-library',
+  storageBucket: 'weidman-family-library.appspot.com',
+  messagingSenderId: '166456432095',
+  appId: '1:166456432095:web:75ec4d0b775d59659ca06a',
+};
+initializeApp(firebaseConfig);
 export default {
   name: 'App',
   components: {
@@ -94,9 +98,6 @@ export default {
         genre: newBook.genre,
         length: newBook.length,
       });
-      this.books.sort((a, b) => {
-        return a.author.localeCompare(b.author);
-      });
     },
     deleteBook(id) {
       const index = this.books.findIndex((book) => book.id === id);
@@ -105,6 +106,7 @@ export default {
       }
     },
     async fetchBooks() {
+      let booksArray;
       try {
         // Fetch data from Firebase
         const response = await fetch(
@@ -113,17 +115,27 @@ export default {
         const data = await response.json();
         // Update the local books array with the retrieved data
         if (data) {
-          this.books = Object.keys(data).map((key) => ({
+          booksArray = Object.keys(data).map((key) => ({
             id: key,
             title: data[key].title,
             author: data[key].author,
             genre: data[key].genre,
             length: data[key].length,
           }));
+
+          booksArray.sort((a, b) => {
+            const lastNameA = a.author.split(' ').pop().toLowerCase();
+            const lastNameB = b.author.split(' ').pop().toLowerCase();
+            return lastNameA.localeCompare(lastNameB);
+          });
         }
       } catch (error) {
         console.error('Error fetching books:', error);
       } finally {
+        if (booksArray) {
+          this.books = booksArray;
+          console.log(this.books);
+        }
         this.booksLoaded = true;
       }
     },
@@ -132,6 +144,10 @@ export default {
 </script>
 
 <style scoped>
+.input-field {
+  display: block;
+  margin-bottom: 10px; /* Add some margin between input fields */
+}
 .centered {
   margin-bottom: 20px;
   text-align: center;
@@ -162,6 +178,10 @@ export default {
 
 <style>
 body {
-  background-color: rgb(75, 31, 13); /* Change to your desired background color */
+  background-color: rgb(
+    75,
+    31,
+    13
+  ); /* Change to your desired background color */
 }
 </style>
