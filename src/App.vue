@@ -33,6 +33,7 @@
 <script>
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+// import { getDatabase, ref, remove } from 'firebase/database';
 import AddBook from './components/AddBook.vue';
 import BookObject from './components/BookObject.vue';
 const firebaseConfig = {
@@ -98,6 +99,11 @@ export default {
         genre: newBook.genre,
         length: newBook.length,
       });
+      this.books.sort((a, b) => {
+            const lastNameA = a.author.split(' ').pop().toLowerCase();
+            const lastNameB = b.author.split(' ').pop().toLowerCase();
+            return lastNameA.localeCompare(lastNameB);
+          });
     },
     deleteBook(id) {
       const index = this.books.findIndex((book) => book.id === id);
