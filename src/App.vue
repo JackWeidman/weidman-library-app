@@ -100,16 +100,38 @@ export default {
         length: newBook.length,
       });
       this.books.sort((a, b) => {
-            const lastNameA = a.author.split(' ').pop().toLowerCase();
-            const lastNameB = b.author.split(' ').pop().toLowerCase();
-            return lastNameA.localeCompare(lastNameB);
-          });
+        const lastNameA = a.author.split(' ').pop().toLowerCase();
+        const lastNameB = b.author.split(' ').pop().toLowerCase();
+        return lastNameA.localeCompare(lastNameB);
+      });
     },
     deleteBook(id) {
       const index = this.books.findIndex((book) => book.id === id);
       if (index !== -1) {
-        this.books.splice(index, 1);
+        const deletedBook = this.books.splice(index, 1)[0]; // Remove book from frontend
+        // Delete book from the database
+        this.deleteBookFromDatabase(deletedBook.id)
+          .then(() => {
+            console.log('Book deleted successfully from database');
+          })
+          .catch((error) => {
+            console.error('Error deleting book from database:', error);
+            // If deletion from database fails, add the book back to the frontend
+            this.books.splice(index, 0, deletedBook);
+          });
       }
+    },
+    async deleteBookFromDatabase(bookId) {
+        const response = await fetch(
+          `https://weidman-family-library-default-rtdb.firebaseio.com/books/${bookId}.json`,
+          {
+            method: 'DELETE',
+          }
+        );
+        if (!response.ok) {
+          throw new Error('Failed to delete book from database');
+        }
+      
     },
     async fetchBooks() {
       let booksArray;
