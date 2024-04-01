@@ -105,7 +105,7 @@ export default {
         return lastNameA.localeCompare(lastNameB);
       });
     },
-    deleteBook(id) {
+    async deleteBook(id) {
       const index = this.books.findIndex((book) => book.id === id);
       if (index !== -1) {
         const deletedBook = this.books.splice(index, 1)[0]; // Remove book from frontend
