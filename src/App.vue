@@ -33,7 +33,7 @@
 <script>
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-// import { getDatabase, ref, remove } from 'firebase/database';
+import { getDatabase, ref, remove, push } from 'firebase/database';
 import AddBook from './components/AddBook.vue';
 import BookObject from './components/BookObject.vue';
 const firebaseConfig = {
@@ -91,48 +91,60 @@ export default {
         console.error('Error signing out:', error);
       }
     },
-    addBook(newBook) {
-      this.books.push({
-        id: this.books.length + 1,
+    async addBook(newBook) {
+      const db = getDatabase();
+      const booksRef = ref(db, 'books'); // Reference to the 'books' collection
+
+      // Push the new book object to the database
+      push(booksRef, {
         title: newBook.title,
         author: newBook.author,
         genre: newBook.genre,
         length: newBook.length,
-      });
-      this.books.sort((a, b) => {
-        const lastNameA = a.author.split(' ').pop().toLowerCase();
-        const lastNameB = b.author.split(' ').pop().toLowerCase();
-        return lastNameA.localeCompare(lastNameB);
-      });
+      })
+        .then((newBookRef) => {
+          console.log('Added new book with ID: ', newBookRef.key);
+          // Optionally, you can update the local state here if needed
+          this.fetchBooks();
+        })
+        .catch((error) => {
+          console.error('Error adding book to the database:', error);
+        })
+        
     },
-    async deleteBook(id) {
-      const index = this.books.findIndex((book) => book.id === id);
-      if (index !== -1) {
-        const deletedBook = this.books.splice(index, 1)[0]; // Remove book from frontend
-        // Delete book from the database
-        this.deleteBookFromDatabase(deletedBook.id)
-          .then(() => {
-            console.log('Book deleted successfully from database');
-          })
-          .catch((error) => {
-            console.error('Error deleting book from database:', error);
-            // If deletion from database fails, add the book back to the frontend
-            this.books.splice(index, 0, deletedBook);
-          });
+
+    async deleteBook(bookId) {
+      console.log(bookId);
+      const db = getDatabase();
+      const bookRef = ref(db, `books/${bookId}`);
+
+      try {
+        remove(bookRef);
+        console.log('Book deleted successfully from database');
+        // Optionally, you can trigger a re-fetch of books after deletion
+        this.fetchBooks();
+      } catch (error) {
+        console.error('Error deleting book from database:', error);
+        throw new Error('Failed to delete book from database');
       }
-    },
-    async deleteBookFromDatabase(bookId) {
-        const response = await fetch(
-          `https://weidman-family-library-default-rtdb.firebaseio.com/books/${bookId}.json`,
-          {
-            method: 'DELETE',
-          }
-        );
-        if (!response.ok) {
-          throw new Error('Failed to delete book from database');
-        }
       
     },
+    // const index = this.books.findIndex((book) => book.id === id);
+    // if (index !== -1) {
+    //   const deletedBook = this.books.splice(index, 1)[0]; // Remove book from frontend
+    //   // Delete book from the database
+    //   await this.deleteBookFromDatabase(deletedBook.id)
+    //     .then(() => {
+    //       console.log('Book deleted successfully from database');
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error deleting book from database:', error);
+    //       // If deletion from database fails, add the book back to the frontend
+    //       this.books.splice(index, 0, deletedBook);
+    //     });
+    //   }
+    // },
+
     async fetchBooks() {
       let booksArray;
       try {

@@ -1,9 +1,8 @@
 <template>
-   
-    <button  v-if="!showForm" @click="toggleForm" class="add-book-button">
-      +
-    </button>
- 
+  <button v-if="!showForm" @click="toggleForm" class="add-book-button">
+    +
+  </button>
+
   <base-card v-else>
     <!-- Conditional rendering based on the value of showForm -->
     <form @submit.prevent="addBook" class="font-color">
@@ -59,42 +58,19 @@ export default {
   },
   methods: {
     addBook() {
+      
       this.$emit('add-book', this.newBook);
-
-      fetch(
-        'https://weidman-family-library-default-rtdb.firebaseio.com/books.json',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(this.newBook),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Failed to add book to database');
-          }
-          // Reset the form fields after successful addition
-          this.newBook = {
-            title: '',
-            author: '',
-            genre: '',
-            length: '',
-            // review: '',
-          };
-          this.showForm = false; // Hide the form after submission
-        })
-        .catch((error) => {
-          console.error('Error adding book to database:', error);
-        });
+      this.newBook = {
+        title: '',
+        author: '',
+        genre: '',
+        length: '',
+      };
     },
     toggleForm() {
       this.showForm = !this.showForm; // Toggle showForm flag
     },
-    
   },
-  
 };
 </script>
 
