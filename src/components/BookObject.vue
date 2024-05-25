@@ -1,29 +1,33 @@
 <template>
-  <base-card>
-    <div class="book" @click="toggleDetails">
-      <div class="cover" :class="{ open: detailsAreVisible }">
-        <h2>{{ title }}</h2>
-        <h4>by</h4>
-        <h2>{{ author }}</h2>
-      </div>
+  <div class="book" @click="toggleDetails">
+    <div class="cover" :class="{ open: detailsAreVisible }">
+      <h2>{{ title }}</h2>
+      <h4>by</h4>
+      <h2>{{ author }}</h2>
+    </div>
 
-      <div class="pages" :class="{ open: detailsAreVisible }">
-        <div class="content">
-          <h2>Genre: {{ genre }}</h2>
-          <h2>Length: {{ length }}</h2>
-          <h2>Review: {{ review }}</h2>
-         
-          <button @click="deleteBook" class="delete-button" v-show="detailsAreVisible">Delete</button>
-        </div>
+    <div class="pages" :class="{ open: detailsAreVisible }">
+      <div class="content">
+        <h2>Genre: {{ genre }}</h2>
+        <h2>Length: {{ length }}</h2>
+        <h2>Review: {{ review }}</h2>
+
+        <button
+          @click="deleteBook"
+          class="delete-button"
+          v-show="detailsAreVisible"
+        >
+          Delete
+        </button>
       </div>
     </div>
-  </base-card>
+  </div>
 </template>
 
 <script>
 export default {
   props: ['id', 'title', 'author', 'genre', 'length', 'review'], // Include 'id' prop
-  
+
   data() {
     return {
       detailsAreVisible: false,
@@ -33,10 +37,10 @@ export default {
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
-    deleteBook(){
+    deleteBook() {
       // Emit 'delete' event with the book's id
       this.$emit('delete', this.id);
-    }
+    },
   },
 };
 </script>
@@ -51,6 +55,8 @@ export default {
   border: 1px solid #ddd;
   padding: 5px;
   cursor: pointer;
+  -webkit-animation: shadow-pop-tl 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+  animation: shadow-pop-tl 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 }
 
 .cover {
@@ -104,4 +110,35 @@ export default {
   bottom: 10px;
   left: 70%;
 }
+
+
+ @-webkit-keyframes shadow-pop-tl {
+  0% {
+    -webkit-box-shadow: 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b;
+            box-shadow: 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b;
+    -webkit-transform: translateX(0) translateY(0);
+            transform: translateX(0) translateY(0);
+  }
+  100% {
+    -webkit-box-shadow: -1px -1px #ffb55b, -2px -2px #ffb55b, -3px -3px #ffb55b, -4px -4px #ffb55b, -5px -5px #ffb55b, -6px -6px #ffb55b, -7px -7px #ffb55b, -8px -8px #ffb55b;
+            box-shadow: -1px -1px #ffb55b, -2px -2px #ffb55b, -3px -3px #ffb55b, -4px -4px #ffb55b, -5px -5px #ffb55b, -6px -6px #ffb55b, -7px -7px #ffb55b, -8px -8px #ffb55b;
+    -webkit-transform: translateX(8px) translateY(8px);
+            transform: translateX(8px) translateY(8px);
+  }
+}
+@keyframes shadow-pop-tl {
+  0% {
+    -webkit-box-shadow: 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b;
+            box-shadow: 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b, 0 0 #ffb55b;
+    -webkit-transform: translateX(0) translateY(0);
+            transform: translateX(0) translateY(0);
+  }
+  100% {
+    -webkit-box-shadow: -1px -1px #ffb55b, -2px -2px #ffb55b, -3px -3px #ffb55b, -4px -4px #ffb55b, -5px -5px #ffb55b, -6px -6px #ffb55b, -7px -7px #ffb55b, -8px -8px #ffb55b;
+            box-shadow: -1px -1px #ffb55b, -2px -2px #ffb55b, -3px -3px #ffb55b, -4px -4px #ffb55b, -5px -5px #ffb55b, -6px -6px #ffb55b, -7px -7px #ffb55b, -8px -8px #ffb55b;
+    -webkit-transform: translateX(8px) translateY(8px);
+            transform: translateX(8px) translateY(8px);
+  }
+}
+
 </style>

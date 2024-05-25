@@ -12,9 +12,11 @@
   margin: auto;
   max-width: fit-content;
   padding: 2rem;
-  border-radius: 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.425);
-  background-color: rgba(231, 213, 179, 0.904);
+  border-radius: 12px;
+  box-shadow: 0 8px 15px #b1bde6;
+  background-color: #ffb55b;
   margin-bottom: 2rem;
 }
 </style>
+
+
