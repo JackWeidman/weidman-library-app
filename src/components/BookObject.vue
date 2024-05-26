@@ -55,6 +55,7 @@ export default {
   border: 1px solid #ddd;
   padding: 5px;
   cursor: pointer;
+  box-shadow: 0 8px 15px #050f30;
   -webkit-animation: shadow-pop-tl 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
   animation: shadow-pop-tl 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 }

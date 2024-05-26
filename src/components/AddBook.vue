@@ -2,22 +2,19 @@
   <base-card>
     <form @submit.prevent="addBook">
       <div>
-        <strong><label>Title:</label></strong>
+        <!-- <strong><label>Title:</label></strong> -->
         <div>
-          <input type="text" v-model="newBook.title" />
+          <input type="text" placeholder="Title" v-model="newBook.title" />
         </div>
       </div>
       <div>
-        <strong><label>Author:</label></strong>
+        <!-- <strong><label>Author:</label></strong> -->
         <div>
-          <input type="text" v-model="newBook.author" />
+          <input type="text" placeholder="Author" v-model="newBook.author" />
         </div>
       </div>
       <div>
-        <strong><label>Genre:</label></strong>
-        <div>
-          <input type="text" v-model="newBook.genre" />
-        </div>
+        <searchable-dropdown v-model="newBook.genre"></searchable-dropdown>
       </div>
       <div>
         <strong><label for="dropdown">Length:</label></strong>
@@ -42,7 +39,11 @@
 </template>
 
 <script>
+import SearchableDropdown from './SearchableDropdown.vue';
 export default {
+  components: {
+    SearchableDropdown,
+  },
   emits: ['add-book'],
   data() {
     return {
@@ -91,15 +92,15 @@ export default {
 </script>
 
 <style scoped>
-div{
-  padding: .1rem;
-  color: rgb(228, 228, 228);
+div {
+  padding: 0.1rem;
+  color: #071849;
 }
 
-button{
+button {
   width: 100%;
   border-radius: 4px;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .disabled {
@@ -110,12 +111,11 @@ button{
 }
 
 input,
-select{
+select {
   width: 100%;
   height: 25px;
   border-color: #071849;
   border-width: 1px;
   border-radius: 4px;
 }
-
 </style>
